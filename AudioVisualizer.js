@@ -41,6 +41,10 @@ AudioVisualizer.prototype.initialize = function (source) {
     this.source = source;
     this.source.connect(this.analyser);
     this.analyser.connect(this.context.destination);
+
+	if (AudioVisualizer.sharedContext.state === 'suspended') {
+        AudioVisualizer.sharedContext.resume();
+	}
 }
 
 /** @param {HTMLMediaElement} element */
