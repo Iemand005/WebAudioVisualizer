@@ -73,6 +73,16 @@ AudioVisualizer.prototype.updateBinCount = function (fftSize) {
     this._timeDomainData = new Uint8Array(size);
 };
 
+AudioVisualizer.prototype.updateFrequencyData() {
+	const size = this.frequencyBinCount;
+
+	if (!this._frequencyData || this._frequencyData.length != size)
+		this._frequencyData = new Uint8Array(size);
+
+	this.analyser.getByteFrequencyData(this._frequencyData);
+	return this._frequencyData;
+}
+
 Object.defineProperty(AudioVisualizer, "sharedContext", {
 	get: function() {
 		if (!AudioVisualizer._sharedContext) AudioVisualizer._sharedContext = new AudioContext();
