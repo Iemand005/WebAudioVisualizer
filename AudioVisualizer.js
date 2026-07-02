@@ -14,8 +14,10 @@ function AudioVisualizer(fftSize){
     this.analyser = this.context.createAnalyser();
 
     this.updateBinCount(fftSize);
-    this._frequencyData = new Uint8Array(),
-    this._timeDomainData = new Uint8Array()
+    /** @type {Uint8Array?} */
+    this._frequencyData = null;
+    /** @type {Uint8Array?} */
+    this._timeDomainData = null;
 }
 
 AudioVisualizer._sharedContext = new AudioContext();
