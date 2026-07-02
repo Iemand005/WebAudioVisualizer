@@ -73,7 +73,7 @@ AudioVisualizer.prototype.updateBinCount = function (fftSize) {
     this._timeDomainData = new Uint8Array(size);
 };
 
-AudioVisualizer.prototype.updateFrequencyData() {
+AudioVisualizer.prototype.updateFrequencyData = function() {
 	const size = this.frequencyBinCount;
 
 	if (!this._frequencyData || this._frequencyData.length != size)
@@ -81,7 +81,17 @@ AudioVisualizer.prototype.updateFrequencyData() {
 
 	this.analyser.getByteFrequencyData(this._frequencyData);
 	return this._frequencyData;
-}
+};
+
+AudioVisualizer.prototype.updateTimeDomainData = function() {
+	const size = this.frequencyBinCount;
+
+	if (!this._timeDomainData || this._timeDomainData.length != size)
+		this._timeDomainData = new Uint8Array(size);
+
+	this.analyser.getByteTimeDomainData(this._timeDomainData);
+	return this._timeDomainData;
+};
 
 Object.defineProperty(AudioVisualizer, "sharedContext", {
 	get: function() {
@@ -99,26 +109,13 @@ Object.defineProperty(AudioVisualizer.prototype, "frequencyBinCount", {
 
 Object.defineProperty(AudioVisualizer.prototype, "frequencyData", {
     get: function() {
-        const size = this.frequencyBinCount;
-
-        if (!this._frequencyData || this._frequencyData.length != size)
-            this._frequencyData = new Uint8Array(size);
-
-        this.analyser.getByteFrequencyData(this._frequencyData);
-        return this._frequencyData;
+        return this.updateFrequencyData();
     }
 });
 
 Object.defineProperty(AudioVisualizer.prototype, "timeDomainData", {
     get: function() {
-
-         const size = this.frequencyBinCount;
-
-        if (!this._timeDomainData || this._timeDomainData.length != size)
-            this._timeDomainData = new Uint8Array(size);
-
-        this.analyser.getByteTimeDomainData(this._timeDomainData);
-        return this._timeDomainData;
+		return this.updateTimeDomainData();
     }
 });
 
