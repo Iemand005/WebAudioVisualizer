@@ -1,6 +1,6 @@
-// Audio visualiser with vanilla JavaScript
-// Lasse Lauwerys © 2024
-// 10/1/2024
+// Audio visualizer 2.0
+// Lasse Lauwerys © 2026
+// 02/07/2026
 
 'use strict';
 
