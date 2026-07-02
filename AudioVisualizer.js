@@ -82,13 +82,13 @@ Object.defineProperty(AudioVisualizer, "sharedContext", {
 });
 
 Object.defineProperty(AudioVisualizer.prototype, "frequencyBinCount", {
-  get: function() {
+	get: function() {
         return this.analyser.frequencyBinCount;
     }
 });
 
 Object.defineProperty(AudioVisualizer.prototype, "frequencyData", {
-    get: function () {
+    get: function() {
         const size = this.frequencyBinCount;
 
         if (!this._frequencyData || this._frequencyData.length != size)
