@@ -22,8 +22,7 @@ function AudioVisualizer(fftSize){
 }
 
 AudioVisualizer._sharedContext = new AudioContext();
-/** @type {HTMLElement[]?} */
-AudioVisualizer._elementSources = null;
+AudioVisualizer._elementSources = new WeakMap();
 
 AudioVisualizer.prototype.destroy = function () {
         this.analyser.disconnect();
@@ -45,7 +44,6 @@ AudioVisualizer.prototype.initialize = function (source) {
 
 /** @param {HTMLMediaElement} element */
 AudioVisualizer.prototype.initializeWithMediaElement = function (element) {
-    if (!AudioVisualizer._elementSources) AudioVisualizer._elementSources = new WeakMap();
     this.elementSource = AudioVisualizer._elementSources.get(element);
     if (!this.elementSource) {
         this.elementSource = this.context.createMediaElementSource(element);
