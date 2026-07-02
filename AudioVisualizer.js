@@ -22,6 +22,8 @@ function AudioVisualizer(fftSize){
 }
 
 AudioVisualizer._sharedContext = new AudioContext();
+/** @type {HTMLElement[]?} */
+AudioVisualizer._elementSources = null;
 
 AudioVisualizer.prototype.destroy = function () {
         this.analyser.disconnect();
