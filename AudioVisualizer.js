@@ -70,7 +70,7 @@ AudioVisualizer.prototype.updateBinCount = function (fftSize) {
 };
 
 Object.defineProperty(AudioVisualizer, "sharedContext", {
-  get: function() {
+get: function() {
     if (!AudioVisualizer._sharedContext) AudioVisualizer._sharedContext = new AudioContext();
     this.context = AudioVisualizer._sharedContext;
     }
