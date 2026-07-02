@@ -32,7 +32,7 @@ AudioVisualizer.prototype.destroy = function () {
 AudioVisualizer.prototype.disconnectAnalyser = function () {
     if (this.analyser && this.analyser.disconnect) this.analyser.disconnect();
 };
-
+/** @param {MediaElementAudioSourceNode} source */
 AudioVisualizer.prototype.initialize = function (source) {
     if (this.source && this.source.disconnect) {
         try { this.source.disconnect(this.analyser); } catch (e) {}
