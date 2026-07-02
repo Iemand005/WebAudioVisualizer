@@ -41,6 +41,7 @@ AudioVisualizer.prototype.initialize = function (source) {
     this.analyser.connect(this.context.destination);
 }
 
+/** @param {HTMLMediaElement} element */
 AudioVisualizer.prototype.initializeWithMediaElement = function (element) {
     if (!AudioVisualizer._elementSources) AudioVisualizer._elementSources = new WeakMap();
     this.elementSource = AudioVisualizer._elementSources.get(element);
@@ -51,11 +52,13 @@ AudioVisualizer.prototype.initializeWithMediaElement = function (element) {
     this.initialize(this.elementSource);
 };
 
+/** @param {MediaStream} stream */
 AudioVisualizer.prototype.initializeWithMediaStream = function (stream) {
     this.streamSource = this.context.createMediaStreamSource(stream);
     this.initialize(this.streamSource);
 };
 
+/** @param {number} fftSize  */
 AudioVisualizer.prototype.updateBinCount = function (fftSize) {
     this.analyser.fftSize = fftSize || 64;
 
@@ -102,4 +105,4 @@ Object.defineProperty(AudioVisualizer.prototype, "timeDomainData", {
         return this._timeDomainData;
     }
 });
-o
+
