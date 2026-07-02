@@ -4,6 +4,7 @@
 
 'use strict';
 
+/** @param {number} fftSize  */
 function AudioVisualizer(fftSize){
     this.elementSource = null;
     this.streamSource = null;
