@@ -22,6 +22,7 @@ function AudioVisualizer(fftSize){
 }
 
 AudioVisualizer._sharedContext = new AudioContext();
+/** @type {WeakMap<HTMLElement, MediaElementAudioSourceNode>} */
 AudioVisualizer._elementSources = new WeakMap();
 
 AudioVisualizer.prototype.destroy = function () {
