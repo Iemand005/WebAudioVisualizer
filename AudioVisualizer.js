@@ -4,13 +4,13 @@
 
 'use strict';
 
-function AudioVisualiser(fftSize){
+function AudioVisualizer(fftSize){
     this.elementSource = null;
     this.streamSource = null;
     this.source = null;
     
     /** @type {AudioContext} */
-    this.context = AudioVisualiser._sharedContext;
+    this.context = AudioVisualizer._sharedContext;
     this.analyser = this.context.createAnalyser();
 
     this.updateBinCount(fftSize);
@@ -18,17 +18,17 @@ function AudioVisualiser(fftSize){
     this._timeDomainData = new Uint8Array()
 }
 
-AudioVisualiser._sharedContext = new AudioContext();
+AudioVisualizer._sharedContext = new AudioContext();
 
-AudioVisualiser.prototype.destroy = function () {
+AudioVisualizer.prototype.destroy = function () {
         this.analyser.disconnect();
     };
 
-AudioVisualiser.prototype.disconnectAnalyser = function () {
+AudioVisualizer.prototype.disconnectAnalyser = function () {
     if (this.analyser && this.analyser.disconnect) this.analyser.disconnect();
 };
 
-AudioVisualiser.prototype.initialize = function (source) {
+AudioVisualizer.prototype.initialize = function (source) {
     if (this.source && this.source.disconnect) {
         try { this.source.disconnect(this.analyser); } catch (e) {}
     }
@@ -38,22 +38,22 @@ AudioVisualiser.prototype.initialize = function (source) {
     this.analyser.connect(this.context.destination);
 }
 
-AudioVisualiser.prototype.initializeWithMediaElement = function (element) {
-    if (!AudioVisualiser._elementSources) AudioVisualiser._elementSources = new WeakMap();
-    this.elementSource = AudioVisualiser._elementSources.get(element);
+AudioVisualizer.prototype.initializeWithMediaElement = function (element) {
+    if (!AudioVisualizer._elementSources) AudioVisualizer._elementSources = new WeakMap();
+    this.elementSource = AudioVisualizer._elementSources.get(element);
     if (!this.elementSource) {
         this.elementSource = this.context.createMediaElementSource(element);
-        AudioVisualiser._elementSources.set(element, this.elementSource);
+        AudioVisualizer._elementSources.set(element, this.elementSource);
     }
     this.initialize(this.elementSource);
 };
 
-AudioVisualiser.prototype.initializeWithMediaStream = function (stream) {
+AudioVisualizer.prototype.initializeWithMediaStream = function (stream) {
     this.streamSource = this.context.createMediaStreamSource(stream);
     this.initialize(this.streamSource);
 };
 
-AudioVisualiser.prototype.updateBinCount = function (fftSize) {
+AudioVisualizer.prototype.updateBinCount = function (fftSize) {
     this.analyser.fftSize = fftSize || 64;
 
     const size = this.analyser.frequencyBinCount;
@@ -62,20 +62,20 @@ AudioVisualiser.prototype.updateBinCount = function (fftSize) {
     this._timeDomainData = new Uint8Array(size);
 };
 
-Object.defineProperty(AudioVisualiser, "sharedContext", {
+Object.defineProperty(AudioVisualizer, "sharedContext", {
   get: function() {
-    if (!AudioVisualiser._sharedContext) AudioVisualiser._sharedContext = new AudioContext();
-    this.context = AudioVisualiser._sharedContext;
+    if (!AudioVisualizer._sharedContext) AudioVisualizer._sharedContext = new AudioContext();
+    this.context = AudioVisualizer._sharedContext;
     }
 });
 
-Object.defineProperty(AudioVisualiser.prototype, "frequencyBinCount", {
+Object.defineProperty(AudioVisualizer.prototype, "frequencyBinCount", {
   get: function() {
         return this.analyser.frequencyBinCount;
     }
 });
 
-Object.defineProperty(AudioVisualiser.prototype, "frequencyData", {
+Object.defineProperty(AudioVisualizer.prototype, "frequencyData", {
     get: function () {
         const size = this.frequencyBinCount;
 
@@ -87,7 +87,7 @@ Object.defineProperty(AudioVisualiser.prototype, "frequencyData", {
     }
 });
 
-Object.defineProperty(AudioVisualiser.prototype, "timeDomainData", {
+Object.defineProperty(AudioVisualizer.prototype, "timeDomainData", {
     get: function() {
 
          const size = this.frequencyBinCount;
